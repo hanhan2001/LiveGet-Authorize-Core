@@ -2,7 +2,7 @@ package me.xiaoying.livegetauthorize.core.scheduler;
 
 import me.xiaoying.livegetauthorize.core.plugin.JavaPlugin;
 
-public interface XiaoYingScheduler {
+public interface Scheduler {
     void cancelTask(int task);
 
     void runTask(JavaPlugin plugin, Runnable runnable);
