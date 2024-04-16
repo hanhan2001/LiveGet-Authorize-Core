@@ -62,7 +62,7 @@ public class PluginClassLoader extends URLClassLoader {
     }
 
     Class<?> findClass(String name, boolean checkGlobal) throws ClassNotFoundException {
-        if (name.startsWith("me.xiaoying.bot."))
+        if (name.startsWith("me.xiaoying.livegetauthorize."))
             throw new ClassNotFoundException(name);
 
         Class<?> result = this.classes.get(name);

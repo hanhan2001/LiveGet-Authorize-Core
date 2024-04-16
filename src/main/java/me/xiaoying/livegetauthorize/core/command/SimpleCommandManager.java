@@ -13,7 +13,7 @@ public class SimpleCommandManager implements CommandManager {
     private final Map<String, Command> knownCommand = new HashMap<>();
 
     public SimpleCommandManager() {
-        this.registerCommand("xiaoyingbot", new HelpCommand("help"));
+        this.registerCommand("authorizecore", new HelpCommand("help"));
     }
 
     @Override
@@ -96,14 +96,14 @@ public class SimpleCommandManager implements CommandManager {
         for (String s : this.knownCommand.keySet()) {
             if (!s.endsWith(":" + command))
                 continue;
-            if (s.startsWith("xiaoying:"))
+            if (s.startsWith("authorizecore:"))
                 continue;
 
             return s;
         }
 
-        if (this.knownCommand.get("xiaoying:" + command) != null)
-            return "xiaoying:" + command;
+        if (this.knownCommand.get("authorizecore:" + command) != null)
+            return "authorizecore:" + command;
         return null;
     }
 }
