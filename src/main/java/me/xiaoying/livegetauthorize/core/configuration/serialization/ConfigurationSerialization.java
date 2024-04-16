@@ -1,6 +1,6 @@
 package me.xiaoying.livegetauthorize.core.configuration.serialization;
 
-import me.xiaoying.bot.core.utils.Preconditions;
+import me.xiaoying.livegetauthorize.core.utils.Preconditions;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
