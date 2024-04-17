@@ -10,6 +10,10 @@ import java.util.Date;
 public interface User extends CommandSender {
     long getQQ();
 
+    String getEmail();
+
+    long getTelephone();
+
     String getUUID();
 
     String getPassword();
