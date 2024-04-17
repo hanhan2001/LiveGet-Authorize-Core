@@ -1,5 +1,6 @@
 package me.xiaoying.livegetauthorize.core.command;
 
+import me.xiaoying.livegetauthorize.core.LACore;
 import me.xiaoying.livegetauthorize.core.NamespacedKey;
 import me.xiaoying.livegetauthorize.core.command.commands.HelpCommand;
 import me.xiaoying.livegetauthorize.core.plugin.Plugin;
@@ -75,7 +76,11 @@ public class SimpleCommandManager implements CommandManager {
         String[] args = null;
         if (split.length != 1)
             args = new ArrayList<>(Arrays.asList(split).subList(1, split.length)).toArray(new String[0]);
-        cmd.execute(sender, args);
+        try {
+            cmd.execute(sender, args);
+        } catch (Exception e) {
+            LACore.getLogger().error(e.getMessage());
+        }
         return true;
     }
 
