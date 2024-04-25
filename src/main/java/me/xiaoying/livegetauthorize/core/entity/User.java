@@ -27,4 +27,8 @@ public interface User extends CommandSender {
     boolean isSurvival();
 
     void updateSurvival();
+
+    String getToken();
+
+    void setToken(String token);
 }
