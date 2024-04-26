@@ -77,7 +77,6 @@ public class SimpleCommandManager implements CommandManager {
         if (split.length != 1)
             args = new ArrayList<>(Arrays.asList(split).subList(1, split.length)).toArray(new String[0]);
         try {
-            LACore.getLogger().info("{} issued server command: {}", sender.getName(), command);
             cmd.execute(sender, args);
         } catch (Exception e) {
             LACore.getLogger().error(e.getMessage());
