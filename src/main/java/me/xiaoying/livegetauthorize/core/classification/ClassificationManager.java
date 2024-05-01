@@ -21,5 +21,7 @@ public interface ClassificationManager {
 
     void unregisterClassification(String name);
 
+    void unregisterClassification(String name, String classification);
+
     List<Classification> getClassifications();
 }
