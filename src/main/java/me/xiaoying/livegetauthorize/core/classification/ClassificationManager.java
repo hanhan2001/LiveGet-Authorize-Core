@@ -10,7 +10,14 @@ import java.util.List;
 public interface ClassificationManager {
     void registerClassification(NamespacedKey namespacedKey, Classification classification);
 
-    List<Classification> getClassification(String name);
+    /**
+     * Get classification
+     *
+     * @param name NamespacedKey
+     * @param classification Classification's name
+     * @return Classification
+     */
+    Classification getClassification(String name, String classification);
 
     void unregisterClassification(NamespacedKey namespacedKey);
 
