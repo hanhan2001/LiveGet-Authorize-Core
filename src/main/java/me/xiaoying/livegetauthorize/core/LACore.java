@@ -14,9 +14,8 @@ public class LACore {
     }
 
     public static void setServer(Server server) {
-        if (LACore.server != null) {
+        if (LACore.server != null)
             throw new UnsupportedOperationException("Cannot redefine singleton Server");
-        }
 
         LACore.server = server;
         logger.info("This server is running " + getName());
