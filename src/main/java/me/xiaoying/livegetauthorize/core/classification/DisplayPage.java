@@ -5,7 +5,7 @@ import me.xiaoying.livegetauthorize.core.permission.Permission;
 /**
  * Classification DisplayPage
  */
-public class DisplayPage {
+public abstract class DisplayPage {
     private final Permission permission;
 
     public DisplayPage(Permission permission) {
