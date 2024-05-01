@@ -12,11 +12,21 @@ import java.util.Map;
  * Classification
  */
 public abstract class Classification {
+    private String name;
     private Permission permission;
     private final Map<String, DisplayPage> knownDisplayPage = new HashMap<>();
 
-    public Classification(Permission permission) {
+    public Classification(String name) {
+        this(name, null);
+    }
+
+    public Classification(String name, Permission permission) {
+        this.name = name;
         this.permission = permission;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Permission getPermission() {

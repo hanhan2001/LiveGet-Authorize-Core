@@ -6,10 +6,20 @@ import me.xiaoying.livegetauthorize.core.permission.Permission;
  * Classification DisplayPage
  */
 public abstract class DisplayPage {
+    private String name;
     private final Permission permission;
 
-    public DisplayPage(Permission permission) {
+    public DisplayPage(String name) {
+        this(name, null);
+    }
+
+    public DisplayPage(String name, Permission permission) {
+        this.name = name;
         this.permission = permission;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Permission getPermission() {
