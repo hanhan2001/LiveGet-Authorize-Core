@@ -31,4 +31,6 @@ public interface User extends CommandSender {
     String getToken();
 
     void setToken(String token);
+
+    boolean hasPermission(String permission);
 }
