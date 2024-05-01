@@ -19,7 +19,7 @@ public interface ClassificationManager {
      */
     Classification getClassification(String name, String classification);
 
-    void unregisterClassification(NamespacedKey namespacedKey);
+    void unregisterClassification(String name);
 
     List<Classification> getClassifications();
 }
