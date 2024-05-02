@@ -9,7 +9,7 @@ import me.xiaoying.livegetauthorize.core.event.HandlerList;
 public class UserLoginEvent extends UserEvent {
     public static HandlerList handlers = new HandlerList();
 
-    public UserLoginEvent(User user, String ip) {
+    public UserLoginEvent(User user) {
         super(user);
     }
 
