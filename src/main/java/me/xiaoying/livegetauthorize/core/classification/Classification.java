@@ -68,4 +68,12 @@ public abstract class Classification {
     public List<DisplayPage> getPages() {
         return new ArrayList<>(this.knownDisplayPage.values());
     }
+
+    public abstract void enable();
+
+    public abstract void disable();
+
+    public abstract void onEnable();
+
+    public abstract void onDisable();
 }
