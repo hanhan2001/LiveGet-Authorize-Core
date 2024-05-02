@@ -6,7 +6,7 @@ import me.xiaoying.logger.Logger;
 import me.xiaoying.logger.LoggerFactory;
 
 public class LACore {
-    private static final Logger logger = new LoggerFactory().getLogger();
+    private static final Logger logger = LoggerFactory.getLogger();
     private static Server server;
 
     public static Server getServer() {
