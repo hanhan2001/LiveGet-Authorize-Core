@@ -184,6 +184,8 @@ public class SimplePluginManager implements PluginManager {
     private void fireEvent(Event event) {
         HandlerList handlers = event.getHandlers();
         RegisteredListener[] listeners = handlers.getRegisteredListener();
+        if (listeners == null)
+            return;
 
         for (RegisteredListener registration : listeners) {
             if (!registration.getPlugin().isEnabled())
