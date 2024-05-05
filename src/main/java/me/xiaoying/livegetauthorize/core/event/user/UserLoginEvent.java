@@ -7,7 +7,7 @@ import me.xiaoying.livegetauthorize.core.event.HandlerList;
  * Event User login
  */
 public class UserLoginEvent extends UserEvent {
-    public static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
     public UserLoginEvent(User user) {
         super(user);

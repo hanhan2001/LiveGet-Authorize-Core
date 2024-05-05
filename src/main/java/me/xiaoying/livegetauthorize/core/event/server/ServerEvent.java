@@ -7,10 +7,10 @@ import me.xiaoying.livegetauthorize.core.event.HandlerList;
  * Event Server
  */
 public class ServerEvent extends Event {
-    public static HandlerList handlerList = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
     @Override
     public HandlerList getHandlers() {
-        return handlerList;
+        return handlers;
     }
 }
