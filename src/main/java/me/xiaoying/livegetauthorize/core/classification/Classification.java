@@ -1,6 +1,7 @@
 package me.xiaoying.livegetauthorize.core.classification;
 
 import me.xiaoying.livegetauthorize.core.NamespacedKey;
+import me.xiaoying.livegetauthorize.core.entity.User;
 import me.xiaoying.livegetauthorize.core.permission.Permission;
 
 import java.util.ArrayList;
@@ -69,11 +70,11 @@ public abstract class Classification {
         return new ArrayList<>(this.knownDisplayPage.values());
     }
 
-    public abstract void enable();
+    public abstract void enable(User user);
 
-    public abstract void disable();
+    public abstract void disable(User user);
 
-    public abstract void onEnable();
+    public abstract void onEnable(User user);
 
-    public abstract void onDisable();
+    public abstract void onDisable(User user);
 }
