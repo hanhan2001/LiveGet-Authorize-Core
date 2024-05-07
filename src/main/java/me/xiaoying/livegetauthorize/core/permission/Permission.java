@@ -39,4 +39,12 @@ public class Permission {
     public void setOver(Date over) {
         this.over = over;
     }
+
+    public boolean overDue() {
+        if (this.save == null || this.over == null)
+            return false;
+        if (new Date().getTime() - this.over.getTime() > 0)
+            return false;
+        return true;
+    }
 }
