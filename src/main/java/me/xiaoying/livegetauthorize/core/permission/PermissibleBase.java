@@ -5,8 +5,13 @@ import me.xiaoying.livegetauthorize.core.plugin.Plugin;
 import java.util.*;
 
 public class PermissibleBase implements Permissible {
+    private final ServerOperator operator;
     private final List<PermissionAttachment> attachments = new ArrayList<>();
     private final Map<String, Permission> knownPermissions = new HashMap<>();
+
+    public PermissibleBase(ServerOperator operator) {
+        this.operator = operator;
+    }
 
     @Override
     public boolean isPermissionSet(String permission) {
@@ -74,5 +79,18 @@ public class PermissibleBase implements Permissible {
 
     public synchronized void clearPermission() {
         this.knownPermissions.clear();
+    }
+
+    @Override
+    public boolean isOp() {
+        return this.operator == null ? false : this.operator.isOp();
+    }
+
+    @Override
+    public void setOp(boolean value) {
+        if (this.operator == null)
+            throw new UnsupportedOperationException("Cannot change op value as no ServerOperator is set");
+
+        this.operator.setOp(value);
     }
 }

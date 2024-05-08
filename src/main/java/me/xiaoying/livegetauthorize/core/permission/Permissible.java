@@ -2,7 +2,7 @@ package me.xiaoying.livegetauthorize.core.permission;
 
 import me.xiaoying.livegetauthorize.core.plugin.Plugin;
 
-public interface Permissible {
+public interface Permissible extends ServerOperator {
     boolean isPermissionSet(String permission);
 
     boolean isPermissionSet(Permission permission);
