@@ -9,6 +9,7 @@ public class Permission {
     private String permission;
     private Date save;
     private Date over;
+    private boolean value = true;
 
     public Permission(String permission) {
         this.permission = permission;
@@ -46,5 +47,13 @@ public class Permission {
         if (new Date().getTime() - this.over.getTime() > 0)
             return false;
         return true;
+    }
+
+    public boolean getValue() {
+        return false;
+    }
+
+    public void setValue(boolean value) {
+        this.value = value;
     }
 }
