@@ -15,6 +15,11 @@ public class Permission {
         this.permission = permission;
     }
 
+    public Permission(String permission, boolean value) {
+        this.permission = permission;
+        this.value = value;
+    }
+
     public Permission(String permission, Date save, Date over) {
         this.permission = permission;
         this.save = save;
