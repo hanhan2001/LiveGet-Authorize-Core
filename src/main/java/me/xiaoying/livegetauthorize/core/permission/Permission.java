@@ -55,7 +55,7 @@ public class Permission {
     }
 
     public boolean getValue() {
-        return false;
+        return this.value;
     }
 
     public void setValue(boolean value) {
