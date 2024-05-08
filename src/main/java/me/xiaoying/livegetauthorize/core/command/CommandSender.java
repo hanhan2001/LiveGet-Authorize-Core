@@ -7,4 +7,6 @@ import me.xiaoying.livegetauthorize.core.permission.Permissible;
  */
 public interface CommandSender extends Permissible {
     String getName();
+
+    void sendMessage(String message);
 }
