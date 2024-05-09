@@ -26,7 +26,7 @@ public class SimpleMessageManager implements MessageManager {
         this.knownMessageExecutor.put(type, list);
     }
 
-    public void callMessage(String string) {
+    public void callMessage(String string, Object... objects) {
         String type = this.getType(string);
 
         if (type == null)
@@ -35,7 +35,7 @@ public class SimpleMessageManager implements MessageManager {
         if (!this.knownMessageExecutor.containsKey(type))
             return;
 
-        this.knownMessageExecutor.get(type).forEach(messageExecutor -> messageExecutor.execute(JSONObject.parseObject(string)));
+        this.knownMessageExecutor.get(type).forEach(messageExecutor -> messageExecutor.execute(JSONObject.parseObject(string), objects));
     }
 
     public String getType(String string) {
