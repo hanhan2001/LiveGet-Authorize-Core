@@ -6,5 +6,5 @@ package me.xiaoying.livegetauthorize.core.message;
 public interface MessageManager {
     void registerMessageExecutor(String type, MessageExecutor executor);
 
-    void callMessage(String string);
+    void callMessage(String string, Object... objects);
 }
