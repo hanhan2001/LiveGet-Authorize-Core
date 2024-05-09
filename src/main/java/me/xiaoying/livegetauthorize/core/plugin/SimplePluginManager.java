@@ -4,7 +4,6 @@ import me.xiaoying.livegetauthorize.core.LACore;
 import me.xiaoying.livegetauthorize.core.event.*;
 import me.xiaoying.livegetauthorize.core.server.Server;
 import me.xiaoying.livegetauthorize.core.utils.Preconditions;
-import me.xiaoying.logger.LoggerFactory;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -30,22 +29,22 @@ public class SimplePluginManager implements PluginManager {
 
     @Override
     public void registerInterface(Class<? extends PluginLoader> loader) throws IllegalArgumentException {
-        PluginLoader instance;
+        PluginLoader pluginLoader;
         if (!PluginLoader.class.isAssignableFrom(loader))
             throw new IllegalArgumentException(String.format("Class %s does not implement interface PluginLoader", loader.getName()));
 
         try {
             Constructor<? extends PluginLoader> constructor = loader.getConstructor(Server.class);
-            instance = constructor.newInstance(this.server);
+            pluginLoader = constructor.newInstance(this.server);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
 
-        Pattern[] patterns = instance.getPluginFileFilters();
+        Pattern[] patterns = pluginLoader.getPluginFileFilters();
 
         synchronized (this) {
             for (Pattern pattern : patterns)
-                this.fileAssociations.put(pattern, instance);
+                this.fileAssociations.put(pattern, pluginLoader);
         }
     }
 
@@ -56,7 +55,7 @@ public class SimplePluginManager implements PluginManager {
 
     @Override
     public Plugin[] getPlugins() {
-        return this.plugins.toArray(new Plugin[0]);
+        return new ArrayList<>(this.plugins).toArray(new Plugin[0]);
     }
 
     @Override
@@ -67,14 +66,14 @@ public class SimplePluginManager implements PluginManager {
 
     @Override
     public boolean isPluginEnabled(Plugin plugin) {
-        return plugin != null && this.plugins.contains(plugin) ? plugin.isEnabled() : false;
+        return plugin != null && this.plugins.contains(plugin) && plugin.isEnabled();
     }
 
     @Override
     public Plugin loadPlugin(File file) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException {
         Preconditions.checkArgument(file != null, "File cannot be null");
         Set<Pattern> filters = this.fileAssociations.keySet();
-        Plugin result = null;
+        Plugin plugin = null;
 
         for (Pattern filter : filters) {
             String name = file.getName();
@@ -82,16 +81,16 @@ public class SimplePluginManager implements PluginManager {
             Matcher match = filter.matcher(name);
             if (match.find()) {
                 PluginLoader loader = this.fileAssociations.get(filter);
-                result = loader.loadPlugin(file);
+                plugin = loader.loadPlugin(file);
             }
         }
 
-        if (result != null) {
-            this.plugins.add(result);
-            this.lookupNames.put(result.getDescription().getName(), result);
+        if (plugin != null) {
+            this.plugins.add(plugin);
+            this.lookupNames.put(plugin.getDescription().getName(), plugin);
         }
 
-        return result;
+        return plugin;
     }
 
     @Override
@@ -99,45 +98,19 @@ public class SimplePluginManager implements PluginManager {
         Preconditions.checkArgument(directory != null, "Directory cannot be null");
         Preconditions.checkArgument(directory.isDirectory(), "Directory must be a directory");
 
-        Set<Pattern> filters = this.fileAssociations.keySet();
-        File[] files;
-        int count = Objects.requireNonNull(files = directory.listFiles()).length;
+        assert directory.listFiles() != null;
 
-        for (int i = 0; i < count; i++) {
-            File file = files[i];
+        if (directory.listFiles() == null || Objects.requireNonNull(directory.listFiles()).length == 0)
+            return null;
 
-            PluginLoader pluginLoader = null;
-            Iterator<Pattern> iterator = filters.iterator();
-
-            Pattern description;
-            while (iterator.hasNext()) {
-                description = iterator.next();
-                Matcher match = description.matcher(file.getName());
-                if (match.find())
-                    pluginLoader = this.fileAssociations.get(description);
-            }
-
-            if (pluginLoader == null)
-                continue;
-
-            PluginDescriptionFile descriptionFile = null;
-
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
             try {
-                descriptionFile = pluginLoader.getPluginDescription(file);
-            } catch (InvalidDescription e) {
-                new LoggerFactory().getLogger().warn("Could not load '{}' in folder '{}'", file.getPath(), directory.getPath());
-                e.printStackTrace();
-            }
-
-            try {
-                Plugin plugin = new JavaPluginLoader(this.server).loadPlugin(file);
-                this.plugins.add(plugin);
-            } catch (InvalidPluginException e) {
+                this.loadPlugin(file);
+            } catch (InvalidPluginException | InvalidDescriptionException e) {
                 throw new RuntimeException(e);
             }
         }
-
-        return this.plugins.toArray(new Plugin[0]);
+        return new ArrayList<>(this.plugins).toArray(new Plugin[0]);
     }
 
     @Override

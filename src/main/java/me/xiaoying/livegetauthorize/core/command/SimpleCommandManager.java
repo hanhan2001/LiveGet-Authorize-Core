@@ -25,6 +25,9 @@ public class SimpleCommandManager implements CommandManager {
     public void registerCommand(Plugin plugin, Command command) {
         this.knownCommand.put(new NamespacedKey(plugin, command.getName()).toString(), command);
 
+        if (command.getAlias() == null)
+            return;
+
         for (String alias : command.getAlias())
             this.knownCommand.put(new NamespacedKey(plugin, alias).toString(), command);
     }

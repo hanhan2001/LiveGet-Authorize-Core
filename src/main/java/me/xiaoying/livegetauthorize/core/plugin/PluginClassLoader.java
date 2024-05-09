@@ -88,6 +88,7 @@ public class PluginClassLoader extends URLClassLoader {
         if (this.plugin != null || this.pluginInit != null)
             throw new IllegalArgumentException("Plugin already initialized!", this.pluginState);
 
+        javaPlugin.init(this.loader, this.description, this.dataFolder, this.file, this);
         this.pluginState = new IllegalStateException("Initial initialization");
         this.pluginInit = javaPlugin;
     }

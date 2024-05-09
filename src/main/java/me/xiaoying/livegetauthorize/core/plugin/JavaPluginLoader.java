@@ -49,8 +49,7 @@ public class JavaPluginLoader implements PluginLoader {
             throw new RuntimeException(e);
         }
 
-        File parentFile = file.getParentFile();
-        File dataFolder = new File(parentFile, description.getName());
+        File dataFolder = new File(file.getParentFile(), description.getName());
 
         try {
             loader = new PluginClassLoader(this, this.getClass().getClassLoader(), description, dataFolder, file, null);
@@ -115,7 +114,7 @@ public class JavaPluginLoader implements PluginLoader {
 
     @Override
     public List<RegisteredListener> getRegisteredListener() {
-        return Collections.emptyList();
+        return registeredListeners;
     }
 
     @Override
@@ -130,7 +129,17 @@ public class JavaPluginLoader implements PluginLoader {
         if (plugin.isEnabled())
             return;
 
-        String message = String.format("Enabling %s %s by %s", plugin.getDescription().getName(), plugin.getDescription().getVersion(), plugin.getDescription().getAuthors());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < plugin.getDescription().getAuthors().length; i++) {
+            stringBuilder.append(plugin.getDescription().getAuthors()[i]);
+
+            if (i == plugin.getDescription().getAuthors().length - 1)
+                break;
+
+            stringBuilder.append(", ");
+        }
+
+        String message = String.format("Enabling %s %s by %s", plugin.getDescription().getName(), plugin.getDescription().getVersion(), stringBuilder);
         LACore.getLogger().info(message);
 
         JavaPlugin jPlugin = (JavaPlugin) plugin;
@@ -142,10 +151,9 @@ public class JavaPluginLoader implements PluginLoader {
         try {
             jPlugin.setEnabled(true);
         } catch (Throwable ex) {
-            LACore.getLogger().warn("Error occurred while enabling {} (Is it up to date?)\n{}",plugin.getDescription().getName(), ex.getMessage());
+//            LACore.getLogger().warn("Error occurred while enabling {} (Is it up to date?)\n{}", plugin.getDescription().getName(), ex.getMessage());
             ex.printStackTrace();
         }
-//        this.server.getPluginManager().callEvent((Event) new PluginEnableEvent(plugin));
     }
 
     @Override

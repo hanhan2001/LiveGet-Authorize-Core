@@ -4,7 +4,6 @@ import me.xiaoying.livegetauthorize.core.LACore;
 import me.xiaoying.livegetauthorize.core.command.Command;
 import me.xiaoying.livegetauthorize.core.server.Server;
 import me.xiaoying.livegetauthorize.core.utils.Preconditions;
-import me.xiaoying.logger.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -124,7 +123,7 @@ public class JavaPlugin extends PluginBase {
 
         try {
             if (outFile.exists() && !replace)
-                new LoggerFactory().getLogger().warn("Could not save {} to {} because {} already exists.", outFile.getName(), outFile.toString(), outFile.getName());
+                LACore.getLogger().warn("Could not save {} to {} because {} already exists.", outFile.getName(), outFile.toString(), outFile.getName());
 
             OutputStream out = Files.newOutputStream(outFile.toPath());
             byte[] buf = new byte[in.available()];
@@ -170,11 +169,10 @@ public class JavaPlugin extends PluginBase {
             throw new IllegalArgumentException("Filename cannot be null");
 
         try {
-            URL url = JavaPlugin.class.getClassLoader().getResource(filename);
+            URL url = this.getClassLoader().getResource(filename);
 
-            if (url == null) {
+            if (url == null)
                 return null;
-            }
 
             URLConnection connection = url.openConnection();
             connection.setUseCaches(false);

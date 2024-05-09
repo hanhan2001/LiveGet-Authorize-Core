@@ -23,7 +23,7 @@ public interface PluginManager {
 
     Plugin loadPlugin(File directory) throws InvalidPluginException, InvalidDescriptionException, UnknownDependencyException;
 
-    Plugin[] loadPlugins(File directory);
+    Object[] loadPlugins(File directory);
 
     void disablePlugins();
 
