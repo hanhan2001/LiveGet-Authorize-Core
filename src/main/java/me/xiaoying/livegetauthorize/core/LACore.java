@@ -1,6 +1,7 @@
 package me.xiaoying.livegetauthorize.core;
 
 import me.xiaoying.livegetauthorize.core.plugin.PluginManager;
+import me.xiaoying.livegetauthorize.core.scheduler.Scheduler;
 import me.xiaoying.livegetauthorize.core.server.Server;
 import me.xiaoying.logger.Logger;
 import me.xiaoying.logger.LoggerFactory;
@@ -19,6 +20,10 @@ public class LACore {
 
         LACore.server = server;
         logger.info("This server is running " + getName());
+    }
+
+    public static Scheduler getScheduler() {
+        return getServer().getScheduler();
     }
 
     public static PluginManager getPluginManager() {
