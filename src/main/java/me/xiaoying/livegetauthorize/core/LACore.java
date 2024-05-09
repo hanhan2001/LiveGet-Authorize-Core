@@ -1,5 +1,6 @@
 package me.xiaoying.livegetauthorize.core;
 
+import me.xiaoying.livegetauthorize.core.message.MessageManager;
 import me.xiaoying.livegetauthorize.core.plugin.PluginManager;
 import me.xiaoying.livegetauthorize.core.scheduler.Scheduler;
 import me.xiaoying.livegetauthorize.core.server.Server;
@@ -27,11 +28,15 @@ public class LACore {
     }
 
     public static PluginManager getPluginManager() {
-        return server.getPluginManager();
+        return getServer().getPluginManager();
+    }
+
+    public static MessageManager getMessageManager() {
+        return getServer().messageManager();
     }
 
     public static String getName() {
-        return server.getName();
+        return getServer().getName();
     }
 
     public static Logger getLogger() {
