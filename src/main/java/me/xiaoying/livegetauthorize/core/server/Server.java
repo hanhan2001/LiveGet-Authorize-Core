@@ -20,7 +20,7 @@ public interface Server {
 
     ClassificationManager getClassificationManager();
 
-    MessageManager messageManager();
+    MessageManager getMessageManager();
 
     void run();
 
