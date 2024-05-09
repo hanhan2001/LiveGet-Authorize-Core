@@ -35,7 +35,7 @@ public class JavaPlugin extends PluginBase {
     }
 
     protected JavaPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-        ClassLoader classLoader = this.getClass().getClassLoader();;
+        ClassLoader classLoader = this.getClass().getClassLoader();
 
         if (classLoader instanceof PluginClassLoader)
             throw new IllegalStateException("Cannot use initialization constructor at runtime");
