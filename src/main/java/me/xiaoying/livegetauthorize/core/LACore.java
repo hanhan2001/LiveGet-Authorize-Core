@@ -32,7 +32,7 @@ public class LACore {
     }
 
     public static MessageManager getMessageManager() {
-        return getServer().messageManager();
+        return getServer().getMessageManager();
     }
 
     public static String getName() {
