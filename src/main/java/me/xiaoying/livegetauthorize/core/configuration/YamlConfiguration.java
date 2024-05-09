@@ -42,7 +42,9 @@ public class YamlConfiguration {
     public List<String> getStringList(String key) {
         if (get(key) == null)
             return null;
-        return Collections.singletonList(String.valueOf(get(key)));
+        if (!(get(key) instanceof List))
+            return null;
+        return (List<String>) get(key);
     }
 
     public int getInt(String key) {
