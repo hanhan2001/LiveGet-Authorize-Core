@@ -31,4 +31,8 @@ public interface User extends CommandSender {
     String getToken();
 
     void setToken(String token);
+
+    void setPhotoBase64();
+
+    String getPhotoBase64();
 }
