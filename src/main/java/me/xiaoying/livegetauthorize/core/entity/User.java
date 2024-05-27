@@ -36,8 +36,6 @@ public interface User extends CommandSender {
      */
     String getUUID();
 
-    String getPassword();
-
     /**
      * 获取 登录IP
      *
@@ -71,20 +69,6 @@ public interface User extends CommandSender {
      * 刷新用户实体缓存
      */
     void updateSurvival();
-
-    /**
-     * 获取 登录Token
-     *
-     * @return 获取用户登录 Token
-     */
-    String getToken();
-
-    /**
-     * 设置 登录Token
-     *
-     * @param token 用户Token
-     */
-    void setToken(String token);
 
     /**
      * 获取 头像
