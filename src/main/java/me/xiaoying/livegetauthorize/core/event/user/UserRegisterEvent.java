@@ -17,4 +17,8 @@ public class UserRegisterEvent extends UserEvent {
     public HandlerList getHandlers() {
         return handlers;
     }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }
