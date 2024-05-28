@@ -188,12 +188,19 @@ public class SimplePluginManager implements PluginManager {
 
     @Override
     public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor, Plugin plugin) {
+        Preconditions.checkArgument(listener != null, "Listener cannot be null");
+        Preconditions.checkArgument(priority != null, "Priority cannot be null");
+        Preconditions.checkArgument(executor != null, "Executor cannot be null");
+        Preconditions.checkArgument(plugin != null, "Plugin cannot be null");
+        if (!plugin.isEnabled())
+            throw new IllegalPluginAccessException("Plugin attempted to register " + event + " while not enabled");
 
+        this.getEventListeners(event).register(new RegisteredListener(listener, executor, priority, plugin));
     }
 
     private HandlerList getEventListeners(Class<? extends Event> type) {
         try {
-            Method method = this.getRegistrationClass(type).getDeclaredMethod("getHandlerList", new Class[0]);
+            Method method = this.getRegistrationClass(type).getDeclaredMethod("getHandlerList");
             method.setAccessible(true);
             if (!Modifier.isStatic(method.getModifiers()))
                 throw new IllegalAccessException("getHandlerList must be static");

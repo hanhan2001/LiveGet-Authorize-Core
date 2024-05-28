@@ -4,18 +4,20 @@ import me.xiaoying.livegetauthorize.core.LACore;
 import me.xiaoying.livegetauthorize.core.configuration.YamlConfiguration;
 import me.xiaoying.livegetauthorize.core.configuration.serialization.ConfigurationSerializable;
 import me.xiaoying.livegetauthorize.core.configuration.serialization.ConfigurationSerialization;
-import me.xiaoying.livegetauthorize.core.event.Event;
-import me.xiaoying.livegetauthorize.core.event.Listener;
-import me.xiaoying.livegetauthorize.core.event.RegisteredListener;
+import me.xiaoying.livegetauthorize.core.event.*;
 import me.xiaoying.livegetauthorize.core.server.Server;
 import me.xiaoying.livegetauthorize.core.utils.Preconditions;
 import me.xiaoying.livegetauthorize.core.utils.ZipUtil;
+import me.xiaoying.logger.event.EventHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 /**
@@ -80,7 +82,73 @@ public class JavaPluginLoader implements PluginLoader {
 
     @Override
     public Map<Class<? extends Event>, Set<RegisteredListener>> createRegisteredListeners(Listener listener, Plugin plugin) {
-        return Collections.emptyMap();
+        Preconditions.checkArgument(plugin != null, "Plugin can not be null");
+        Preconditions.checkArgument(listener != null, "Listener can not be null");
+        Map<Class<? extends Event>, Set<RegisteredListener>> ret = new HashMap<>();
+
+        HashSet<Method> methods;
+        try {
+            Method[] publicMethods = listener.getClass().getMethods();
+            Method[] privateMethods = listener.getClass().getDeclaredMethods();
+            methods = new HashSet<>(publicMethods.length + privateMethods.length, 1.0F);
+            Method[] var11 = publicMethods;
+            int var10 = publicMethods.length;
+
+            Method method;
+            int var9;
+            for(var9 = 0; var9 < var10; ++var9) {
+                method = var11[var9];
+                methods.add(method);
+            }
+
+            var11 = privateMethods;
+            var10 = privateMethods.length;
+
+            for(var9 = 0; var9 < var10; ++var9) {
+                method = var11[var9];
+                methods.add(method);
+            }
+        } catch (NoClassDefFoundError e) {
+            LACore.getLogger().warn("Plugin {} has failed to register events for {} because {} dose not exists.", plugin.getDescription().getName(), listener.getClass().getName(), e.getMessage());
+            return ret;
+        }
+
+        Iterator<Method> iterator = methods.iterator();
+
+        while(true) {
+            while(true) {
+                Method method;
+                EventHandler eh;
+                do {
+                    do {
+                        do {
+                            if (!iterator.hasNext())
+                                return ret;
+
+                            method = iterator.next();
+                            eh = method.getAnnotation(EventHandler.class);
+                        } while (eh == null);
+                    } while (method.isBridge());
+                } while (method.isSynthetic());
+
+                Class<?> checkClass;
+                if (method.getParameterTypes().length != 1 || !Event.class.isAssignableFrom(checkClass = method.getParameterTypes()[0])) {
+                    LACore.getLogger().warn("{} attempted to register an invalid EventHandler method signature \"{}\" in {}", plugin.getDescription().getName(), method.toGenericString(), listener.getClass().getName());
+                    return null;
+                }
+
+                final
+                Class<? extends Event> eventClass = checkClass.asSubclass(Event.class);
+                method.setAccessible(true);
+                Set<RegisteredListener> eventSet = (Set) ret.get(eventClass);
+                if (eventSet == null) {
+                    eventSet = new HashSet<>();
+                    ret.put(eventClass, eventSet);
+                }
+                EventExecutor executor = (listener1, event) -> {};
+                eventSet.add(new RegisteredListener(listener, executor, EventPriority.LOWEST, plugin));
+            }
+        }
     }
 
     @Override
