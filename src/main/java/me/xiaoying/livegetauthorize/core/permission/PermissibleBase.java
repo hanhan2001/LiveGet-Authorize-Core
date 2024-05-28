@@ -2,9 +2,10 @@ package me.xiaoying.livegetauthorize.core.permission;
 
 import me.xiaoying.livegetauthorize.core.plugin.Plugin;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class PermissibleBase implements Permissible {
+public class PermissibleBase implements Permissible, Serializable {
     private final ServerOperator operator;
     private final List<PermissionAttachment> attachments = new ArrayList<>();
     private final Map<String, Permission> knownPermissions = new HashMap<>();
