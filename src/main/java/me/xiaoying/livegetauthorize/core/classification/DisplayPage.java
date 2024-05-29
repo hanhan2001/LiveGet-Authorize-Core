@@ -27,11 +27,11 @@ public abstract class DisplayPage {
         return this.permission;
     }
 
-    public abstract void enable();
+    public abstract void enable(User user);
 
-    public abstract void disable();
+    public abstract void disable(User user);
 
-    public abstract void onEnable();
+    public abstract void onEnable(User user);
 
-    public abstract void onDisable();
+    public abstract void onDisable(User user);
 }
