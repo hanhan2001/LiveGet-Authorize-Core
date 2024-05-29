@@ -71,10 +71,4 @@ public abstract class Classification {
     }
 
     public abstract void enable(User user);
-
-    public abstract void disable(User user);
-
-    public abstract void onEnable(User user);
-
-    public abstract void onDisable(User user);
 }
