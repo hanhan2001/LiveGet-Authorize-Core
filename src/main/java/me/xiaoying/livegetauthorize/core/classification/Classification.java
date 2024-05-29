@@ -13,8 +13,8 @@ import java.util.Map;
  * Classification
  */
 public abstract class Classification {
-    private String name;
-    private Permission permission;
+    private final String name;
+    private Permission permission = null;
     private final Map<String, DisplayPage> knownDisplayPage = new HashMap<>();
 
     public Classification(String name) {
@@ -27,7 +27,7 @@ public abstract class Classification {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Permission getPermission() {
@@ -71,4 +71,6 @@ public abstract class Classification {
     }
 
     public abstract void enable(User user);
+
+    public abstract void enable(User user, DisplayPage displayPage);
 }
