@@ -10,7 +10,7 @@ public class NamespacedKey {
 
     public NamespacedKey(Plugin plugin, String key) {
         this.namespace = plugin.getDescription().getName().toLowerCase(Locale.ROOT);
-        this.key = key;
+        this.key = key.toLowerCase(Locale.ROOT);
     }
 
     public String getNamespace() {
