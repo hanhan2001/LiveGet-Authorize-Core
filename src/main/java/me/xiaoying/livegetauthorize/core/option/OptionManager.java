@@ -9,6 +9,8 @@ public interface OptionManager {
 
     void unregisterOption(String name);
 
+    void unregisterOptions();
+
     Option getOption(String name);
 
     List<Option> getOptions();

@@ -16,6 +16,8 @@ public interface CommandManager {
 
     void unregisterCommands(Plugin plugin);
 
+    void unregisterCommands();
+
     boolean dispatch(CommandSender sender, String command);
 
     Command getCommand(String command);

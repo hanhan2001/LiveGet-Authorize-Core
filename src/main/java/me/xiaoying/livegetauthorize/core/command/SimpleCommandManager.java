@@ -22,6 +22,7 @@ public class SimpleCommandManager implements CommandManager {
         this.knownCommand.put(fallbackPrefix + ":" + command.getName(), command);
     }
 
+    @Override
     public void registerCommand(Plugin plugin, Command command) {
         this.knownCommand.put(new NamespacedKey(plugin, command.getName()).toString(), command);
 
@@ -32,6 +33,7 @@ public class SimpleCommandManager implements CommandManager {
             this.knownCommand.put(new NamespacedKey(plugin, alias).toString(), command);
     }
 
+    @Override
     public void unregisterCommand(Plugin plugin, Command command) {
         this.knownCommand.remove(new NamespacedKey(plugin, command.getName()).toString());
 
@@ -42,6 +44,7 @@ public class SimpleCommandManager implements CommandManager {
             this.knownCommand.remove(new NamespacedKey(plugin, alias).toString());
     }
 
+    @Override
     public void unregisterCommands(Plugin plugin) {
         Iterator<String> iterator = this.knownCommand.keySet().iterator();
         String string;
