@@ -14,10 +14,9 @@ public interface ClassificationManager {
      * Get classification
      *
      * @param name NamespacedKey
-     * @param classification Classification's name
      * @return Classification
      */
-    Classification getClassification(String name, String classification);
+    Classification getClassification(String name);
 
     void unregisterClassification(String name);
 
