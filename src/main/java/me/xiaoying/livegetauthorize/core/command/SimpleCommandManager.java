@@ -56,6 +56,10 @@ public class SimpleCommandManager implements CommandManager {
         }
     }
 
+    public void unregisterCommands() {
+        this.knownCommand.clear();
+    }
+
     @Override
     public boolean dispatch(CommandSender sender, String command) {
         boolean result = false;

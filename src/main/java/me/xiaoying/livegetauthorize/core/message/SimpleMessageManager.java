@@ -2,10 +2,7 @@ package me.xiaoying.livegetauthorize.core.message;
 
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Manager Message Simple
@@ -36,6 +33,26 @@ public class SimpleMessageManager implements MessageManager {
             return;
 
         this.knownMessageExecutor.get(type).forEach(messageExecutor -> messageExecutor.execute(JSONObject.parseObject(string), objects));
+    }
+
+    public void unregisterMessage(String type) {
+        this.knownMessageExecutor.remove(type);
+    }
+
+    public void unregisterMessage(String type, MessageExecutor messageExecutor) {
+        Iterator<MessageExecutor> iterator = this.knownMessageExecutor.get(type).iterator();
+        MessageExecutor executor;
+        while (iterator.hasNext() && (executor = iterator.next()) != null) {
+            if (executor != messageExecutor)
+                continue;
+
+            iterator.remove();
+            break;
+        }
+    }
+
+    public void unregisterMessages() {
+        this.knownMessageExecutor.clear();
     }
 
     public String getType(String string) {
