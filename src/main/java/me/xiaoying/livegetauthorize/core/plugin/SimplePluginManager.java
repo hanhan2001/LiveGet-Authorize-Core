@@ -126,6 +126,8 @@ public class SimplePluginManager implements PluginManager {
         synchronized(this) {
             this.disablePlugins();
             this.plugins.clear();
+            this.lookupNames.clear();
+            this.fileAssociations.clear();
             HandlerList.unregisterAll();
         }
     }
@@ -216,11 +218,8 @@ public class SimplePluginManager implements PluginManager {
             clazz.getDeclaredMethod("getHandlerList", new Class[0]);
             return clazz;
         } catch (NoSuchMethodException noSuchMethodException) {
-            if (clazz.getSuperclass() != null &&
-                    !clazz.getSuperclass().equals(Event.class) &&
-                    Event.class.isAssignableFrom(clazz.getSuperclass())) {
+            if (clazz.getSuperclass() != null && !clazz.getSuperclass().equals(Event.class) && Event.class.isAssignableFrom(clazz.getSuperclass()))
                 return getRegistrationClass(clazz.getSuperclass().asSubclass(Event.class));
-            }
             throw new IllegalPluginAccessException("Unable to find handler list for event " + clazz.getName() + ". Static getHandlerList method required!");
         }
     }
