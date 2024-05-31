@@ -2,6 +2,7 @@ package me.xiaoying.livegetauthorize.core.module;
 
 import me.xiaoying.livegetauthorize.core.permission.Permission;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,6 +107,26 @@ public class Module {
      */
     public ModuleChild getModuleChild(String name) {
         return this.knownChild.get(name);
+    }
+
+    /**
+     * 以字符串方式获取所有 ModuleChild
+     *
+     * @return String
+     */
+    public String getModuleChildrenAsString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (ModuleChild value : this.knownChild.values()) {
+            if (stringBuilder.length() != 0)
+                stringBuilder.append(",");
+
+            stringBuilder.append(value.getName() + "~" + value.getOwner().getUUID());
+            if (value.getSave() != null && value.getOver() != null) {
+                stringBuilder.append("~").append(new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(value.getSave()));
+                stringBuilder.append("~").append(new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(value.getOver()));
+            }
+        }
+        return stringBuilder.toString();
     }
 
     /**
