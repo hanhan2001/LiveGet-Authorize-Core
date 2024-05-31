@@ -1,6 +1,5 @@
 package me.xiaoying.livegetauthorize.core.module;
 
-import me.xiaoying.livegetauthorize.core.NamespacedKey;
 import me.xiaoying.livegetauthorize.core.plugin.Plugin;
 
 import java.util.List;

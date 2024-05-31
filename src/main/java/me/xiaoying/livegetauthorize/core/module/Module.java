@@ -12,7 +12,9 @@ public class Module {
     private final String function;
     private final String description;
     private final String permission;
+    private String identification;
     private final Map<String, ModuleChild> knownChild = new HashMap<>();
+    private final Map<String, Token> knownToken = new HashMap<>();
 
     /**
      * 构造器
@@ -21,10 +23,11 @@ public class Module {
      * @param description 描述
      * @param permission 权限
      */
-    public Module(String function, String description, String permission) {
+    public Module(String function, String description, String identification, String permission) {
         this.function = function;
         this.description = description;
         this.permission = permission;
+        this.identification = identification;
     }
 
     /**
@@ -34,10 +37,11 @@ public class Module {
      * @param description 描述
      * @param permission 权限
      */
-    public Module(String function, String description, Permission permission) {
+    public Module(String function, String description, String identification, Permission permission) {
         this.function = function;
         this.description = description;
         this.permission = permission.getPermission();
+        this.identification = identification;
     }
 
     /**
@@ -65,6 +69,24 @@ public class Module {
      */
     public String getPermission() {
         return this.permission;
+    }
+
+    /**
+     * 获取身份码
+     *
+     * @return String
+     */
+    public String getIdentification() {
+        return identification;
+    }
+
+    /**
+     * 设置身份码
+     *
+     * @param identification String
+     */
+    public void setIdentification(String identification) {
+        this.identification = identification;
     }
 
     /**
