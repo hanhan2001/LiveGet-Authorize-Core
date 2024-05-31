@@ -1,5 +1,8 @@
 package me.xiaoying.livegetauthorize.core.module;
 
+import me.xiaoying.livegetauthorize.core.NamespacedKey;
+import me.xiaoying.livegetauthorize.core.plugin.Plugin;
+
 import java.util.List;
 
 /**
@@ -9,9 +12,10 @@ public interface ModuleManager {
     /**
      * 注册 Module
      *
+     * @param plugin Plugin
      * @param module Module
      */
-    void registerModule(Module module);
+    void registerModule(Plugin plugin, Module module);
 
     /**
      * 取消注册 Module
@@ -23,9 +27,16 @@ public interface ModuleManager {
     /**
      * 取消注册 Module
      *
-     * @param function Module name of function
+     * @param module Module name of function
      */
-    void unregisterModule(String function);
+    void unregisterModule(String module);
+
+    /**
+     * 取消注册 Module
+     *
+     * @param plugin Plugin
+     */
+    void unregisterModules(Plugin plugin);
 
     /**
      * 获取 Module
