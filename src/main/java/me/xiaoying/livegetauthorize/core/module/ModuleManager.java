@@ -46,6 +46,14 @@ public interface ModuleManager {
     Module getModule(String function);
 
     /**
+     * 获取 Module
+     *
+     * @param identification Module identification
+     * @return Module
+     */
+    Module getModuleByIdentification(String identification);
+
+    /**
      * 获取所有 Module
      *
      * @return ArrayList
