@@ -62,6 +62,25 @@ public interface Token {
     void setOver(Date date);
 
     /**
+     * 获取最后使用时间
+     *
+     * @return Date
+     */
+    Date getLastUse();
+
+    /**
+     * 更新最后使用时间
+     */
+    void updateLastUse();
+
+    /**
+     * 设置最后使用时间
+     *
+     * @param date Date
+     */
+    void setLastUse(Date date);
+
+    /**
      * 是否被绑定
      *
      * @return Boolean
