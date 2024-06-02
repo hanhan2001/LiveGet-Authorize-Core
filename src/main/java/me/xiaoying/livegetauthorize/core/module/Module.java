@@ -1,103 +1,91 @@
 package me.xiaoying.livegetauthorize.core.module;
 
-import me.xiaoying.livegetauthorize.core.permission.Permission;
+import me.xiaoying.livegetauthorize.core.entity.User;
+import me.xiaoying.livegetauthorize.core.plugin.Plugin;
 
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 /**
  * Module
  */
-public class Module {
-    private final String function;
-    private final String description;
-    private final String permission;
-    private String identification;
-    private final Map<String, ModuleChild> knownChild = new HashMap<>();
-    private final Map<String, Token> knownToken = new HashMap<>();
-
+public interface Module {
     /**
-     * 构造器
+     * 获取拥有者
      *
-     * @param function Function name
-     * @param description 描述
-     * @param permission 权限
+     * @return User
      */
-    public Module(String function, String description, String identification, String permission) {
-        this.function = function;
-        this.description = description;
-        this.permission = permission;
-        this.identification = identification;
-    }
+    User getOwner();
 
     /**
-     * 构造器
-     *
-     * @param function Function name
-     * @param description 描述
-     * @param permission 权限
-     */
-    public Module(String function, String description, String identification, Permission permission) {
-        this.function = function;
-        this.description = description;
-        this.permission = permission.getPermission();
-        this.identification = identification;
-    }
-
-    /**
-     * 获取 Function
+     * 获取名称
      *
      * @return String
      */
-    public String getFunction() {
-        return this.function;
-    }
+    String getName();
 
     /**
      * 获取描述
      *
      * @return String
      */
-    public String getDescription() {
-        return this.description;
-    }
+    String getDescription();
 
     /**
      * 获取权限
      *
      * @return String
      */
-    public String getPermission() {
-        return this.permission;
-    }
+    String getPermission();
 
     /**
      * 获取身份码
      *
      * @return String
      */
-    public String getIdentification() {
-        return identification;
-    }
+    String getIdentification();
 
     /**
      * 设置身份码
      *
      * @param identification String
      */
-    public void setIdentification(String identification) {
-        this.identification = identification;
-    }
+    void setIdentification(String identification);
+
+    /**
+     * 获取存储时间
+     *
+     * @return Date
+     */
+    Date getSave();
+
+    /**
+     * 获取过期时间
+     *
+     * @return Date
+     */
+    Date getOver();
+
+    /**
+     * 是否过期
+     *
+     * @return Boolean
+     */
+    boolean overdue();
+
+    /**
+     * 获取父 Module
+     *
+     * @return Module
+     */
+    Module getParent();
 
     /**
      * 注册子 Module
      *
-     * @param moduleChild ModuleChild
+     * @param module Module
+     * @param plugin 插件
      */
-    public void registerChild(ModuleChild moduleChild) {
-        this.knownChild.put(moduleChild.getName(), moduleChild);
-    }
+    void registerModuleChild(Module module, Plugin plugin);
 
     /**
      * 获取子 Module
@@ -105,43 +93,34 @@ public class Module {
      * @param name ModuleChild name
      * @return ModuleChild
      */
-    public ModuleChild getModuleChild(String name) {
-        return this.knownChild.get(name);
-    }
+    Module getModuleChild(String name);
 
     /**
      * 以字符串方式获取所有 ModuleChild
      *
      * @return String
      */
-    public String getModuleChildrenAsString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ModuleChild value : this.knownChild.values()) {
-            if (stringBuilder.length() != 0)
-                stringBuilder.append(",");
-
-            stringBuilder.append(value.getName() + "~" + value.getOwner().getUUID());
-            if (value.getSave() != null && value.getOver() != null) {
-                stringBuilder.append("~").append(new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(value.getSave()));
-                stringBuilder.append("~").append(new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(value.getOver()));
-            }
-        }
-        return stringBuilder.toString();
-    }
+    String getModuleChildrenAsString();
 
     /**
      * 卸载 ModuleChild
      *
      * @param name ModuleChild name
      */
-    public void unregisterModuleChild(String name) {
-        this.knownChild.remove(name);
-    }
+    void unregisterModuleChild(String name);
 
     /**
      * 卸载所有 ModuleChild
      */
-    public void unregisterModuleChildren() {
-        this.knownChild.clear();
-    }
+    void unregisterModuleChildren();
+
+    /**
+     * 获取 Token Manager
+     *
+     * @return TokenManager
+     */
+    TokenManager getTokenManager();
+
+    @Override
+    String toString();
 }
