@@ -2,47 +2,60 @@ package me.xiaoying.livegetauthorize.core.module;
 
 import java.util.Date;
 
-public class Token {
-    private final String token;
-    private Date save;
-    private Date over;
-    private final Module module;
+public interface Token {
+    /**
+     * 获取 Token
+     *
+     * @return String
+     */
+    String getToken();
 
-    public Token(String token, Date save, Date over, Module module) {
-        this.token = token;
-        this.save = save;
-        this.over = over;
-        this.module = module;
-    }
+    /**
+     * 获取存储时间
+     *
+     * @return Date
+     */
+    Date getSave();
 
-    public String getToken() {
-        return this.token;
-    }
+    /**
+     * 设置存储时间
+     *
+     * @param date Date
+     */
+    void setSave(Date date);
 
-    public Date getSave() {
-        return this.save;
-    }
+    /**
+     * 获取过期时间
+     *
+     * @return Date
+     */
+    Date getOver();
 
-    public void setSave(Date date) {
-        this.save = date;
-    }
+    /**
+     * 设置过期时间
+     *
+     * @param date Date
+     */
+    void setOver(Date date);
 
-    public Date getOver() {
-        return this.over;
-    }
+    /**
+     * 获取 Module
+     *
+     * @return Module
+     */
+    Module getModule();
 
-    public void setOver(Date date) {
-        this.over = date;
-    }
+    /**
+     * 是否过期
+     *
+     * @return Boolean
+     */
+    boolean overdue();
 
-    public Module getModule() {
-        return this.module;
-    }
-
-    public boolean overdue() {
-        if (this.save == null || this.over == null)
-            return false;
-
-        return new Date().getTime() - this.over.getTime() > 0;
-    }
+    /**
+     * 是否存活
+     *
+     * @return Boolean
+     */
+    boolean isSurvival();
 }
