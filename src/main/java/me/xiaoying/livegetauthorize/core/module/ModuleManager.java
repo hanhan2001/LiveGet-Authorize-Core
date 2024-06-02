@@ -11,6 +11,20 @@ public interface ModuleManager {
     /**
      * 注册 Module
      *
+     * @param module Module
+     */
+    void create(Module module);
+
+    /**
+     * 删除 Module
+     *
+     * @param module Module
+     */
+    void delete(Module module);
+
+    /**
+     * 注册 Module
+     *
      * @param plugin Plugin
      * @param module Module
      */
