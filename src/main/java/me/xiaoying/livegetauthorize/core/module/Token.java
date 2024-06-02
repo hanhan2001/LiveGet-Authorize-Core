@@ -62,6 +62,13 @@ public interface Token {
     void setOver(Date date);
 
     /**
+     * 是否被绑定
+     *
+     * @return Boolean
+     */
+    boolean isBind();
+
+    /**
      * 获取 Module
      *
      * @return Module
