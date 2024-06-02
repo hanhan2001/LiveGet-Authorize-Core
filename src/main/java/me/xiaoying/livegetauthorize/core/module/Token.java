@@ -1,5 +1,7 @@
 package me.xiaoying.livegetauthorize.core.module;
 
+import me.xiaoying.livegetauthorize.core.entity.User;
+
 import java.util.Date;
 
 public interface Token {
@@ -9,6 +11,13 @@ public interface Token {
      * @return String
      */
     String getToken();
+
+    /**
+     * 获取 Token 拥有者
+     *
+     * @return User
+     */
+    User getOwner();
 
     /**
      * 获取存储时间
