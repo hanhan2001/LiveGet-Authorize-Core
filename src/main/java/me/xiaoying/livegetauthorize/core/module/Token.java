@@ -27,6 +27,13 @@ public interface Token {
     String getDescription();
 
     /**
+     * 设置描述
+     *
+     * @param description 描述
+     */
+    void setDescription(String description);
+
+    /**
      * 获取存储时间
      *
      * @return Date
