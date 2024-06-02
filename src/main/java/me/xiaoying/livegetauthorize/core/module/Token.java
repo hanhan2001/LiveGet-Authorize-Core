@@ -20,6 +20,13 @@ public interface Token {
     User getOwner();
 
     /**
+     * 获取描述
+     *
+     * @return String
+     */
+    String getDescription();
+
+    /**
      * 获取存储时间
      *
      * @return Date
