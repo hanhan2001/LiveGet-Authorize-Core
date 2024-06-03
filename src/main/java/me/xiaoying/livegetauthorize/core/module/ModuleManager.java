@@ -45,6 +45,11 @@ public interface ModuleManager {
     void unregisterModule(String module);
 
     /**
+     * 取消注册所有 Module
+     */
+    void unregisterModules();
+
+    /**
      * 取消注册 Module
      *
      * @param plugin Plugin
