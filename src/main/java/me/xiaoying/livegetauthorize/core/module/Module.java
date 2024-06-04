@@ -70,7 +70,7 @@ public interface Module {
      *
      * @return Boolean
      */
-    boolean overdue();
+    boolean expire();
 
     /**
      * 获取父 Module

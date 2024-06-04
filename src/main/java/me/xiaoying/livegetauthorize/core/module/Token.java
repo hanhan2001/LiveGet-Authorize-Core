@@ -99,7 +99,7 @@ public interface Token {
      *
      * @return Boolean
      */
-    boolean overdue();
+    boolean expire();
 
     /**
      * 是否存活
