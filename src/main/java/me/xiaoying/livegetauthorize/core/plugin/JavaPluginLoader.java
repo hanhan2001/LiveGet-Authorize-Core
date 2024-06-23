@@ -145,7 +145,14 @@ public class JavaPluginLoader implements PluginLoader {
                     eventSet = new HashSet<>();
                     ret.put(eventClass, eventSet);
                 }
-                EventExecutor executor = (listener1, event) -> {};
+                Method finalMethod = method;
+                EventExecutor executor = (listener1, event) -> {
+                    try {
+                        finalMethod.invoke(listener1, event);
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException(e);
+                    }
+                };
                 eventSet.add(new RegisteredListener(listener, executor, EventPriority.LOWEST, plugin));
             }
         }

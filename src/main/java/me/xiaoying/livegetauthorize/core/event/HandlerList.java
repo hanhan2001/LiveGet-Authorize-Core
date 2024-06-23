@@ -145,7 +145,7 @@ public class HandlerList {
         return listeners;
     }
 
-    public static List<HandlerList> getHanderList() {
+    public static List<HandlerList> getHandlerLists() {
         synchronized (allLists) {
             return (List<HandlerList>) allLists.clone();
         }
